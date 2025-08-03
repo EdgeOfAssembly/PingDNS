@@ -13,20 +13,29 @@ PingDNS is a command-line tool for mass pinging DNS servers to measure their lat
 1. Clone the repository:
    ```bash
    git clone https://github.com/EdgeOfAssembly/PingDNS.git
+   ```
 
 2. Navigate to the directory:
+   ```bash
    cd PingDNS
+   ```
 
 3. Build with CMake:
+   ```bash
    mkdir build && cd build
    cmake ..
    make
+   ```
 
 4. Run the tool (requires raw socket privileges):
+   ```bash
    sudo ./pingdns [options]
+   ```
 
 Note: Use sudo or set CAP_NET_RAW capability:
+   ```bash
    sudo setcap cap_net_raw+ep pingdns
+   ```
 
 
 ## Usage
@@ -39,9 +48,9 @@ Note: Use sudo or set CAP_NET_RAW capability:
 See the man page (docs/pingdns.1) for more examples.
 
 ## Dependencies
-   libcurl
-   libGeoIP
-   libcap
+- libcurl
+- libGeoIP
+- libcap
 
 1. Install on Ubuntu:
    sudo apt-get install libcurl4-openssl-dev libgeoip-dev libcap-dev
