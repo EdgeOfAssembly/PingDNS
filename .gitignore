@@ -1,0 +1,37 @@
+# Build directories and artifacts
+build/
+CMakeCache.txt
+CMakeFiles/
+CMakeLists.txt.user
+*.cmake
+Makefile
+cmake_install.cmake
+
+# Object files and executables (except the final pingdns binary if you want to keep it)
+*.o
+*.a
+*.so
+!pingdns  # Uncomment this if you want to keep the final binary in the repo
+
+# Editor and IDE files
+*.swp
+*~
+*.bak
+.vscode/
+.idea/
+
+# System-specific files
+.DS_Store
+
+# Dependency caches
+*_cache*
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+
+# Documentation build artifacts (if any)
+docs/html/
+docs/latex/

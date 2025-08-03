@@ -1,0 +1,92 @@
+.TH PINGDNS 1 "August 3, 2025" "Version 1.0" "User Commands"
+.SH NAME
+pingdns - mass ping DNS servers to test latency and retrieve geolocation data
+
+.SH SYNOPSIS
+.B pingdns
+[\fB\-n\fR \fInumber\fR] [\fB\-pings\fR \fIcount\fR] [\fB\-timeout\fR \fIms\fR] [\fB\-t\fR \fIthreads\fR]
+
+.SH DESCRIPTION
+.B pingdns
+is a command-line tool designed to perform mass ping scans on DNS servers to measure their latency using ICMP pings. It is capable of scanning a large number of DNS servers—up to 60,000—by leveraging multi-threading for high efficiency. The tool uses a hardcoded list of well-known DNS servers and can optionally augment this list by downloading additional servers from "https://public-dns.info/nameservers.txt". It also retrieves geolocation data for each server using the GeoIPCity database, providing details such as country and city when available.
+
+The output includes the server name, IP address, geolocation (if available), and average round-trip time (RTT), displayed on the console and saved to a CSV file named
+.B dns_results.csv
+, sorted by RTT. The tool is robust, continuing to operate even if it fails to download the extended server list or geolocation database, falling back to the hardcoded list and omitting geolocation data as needed.
+
+.B pingdns
+is ideal for network enthusiasts, researchers, or anyone needing to evaluate the performance of DNS servers on a large scale.
+
+.SH OPTIONS
+.TP
+\fB\-n\fR \fInumber\fR
+Limits the number of DNS servers to scan. If omitted, all available servers (hardcoded and downloaded) are scanned.
+.TP
+\fB\-pings\fR \fIcount\fR
+Specifies the number of pings to send to each DNS server. Default is 3.
+.TP
+\fB\-timeout\fR \fIms\fR
+Sets the timeout for each ping in milliseconds. Default is 250 ms.
+.TP
+\fB\-t\fR \fIthreads\fR
+Defines the number of threads to use for pinging. Defaults to the number of logical CPU cores.
+
+.SH EXAMPLES
+Here are several practical examples demonstrating how to use
+.B pingdns
+in different scenarios:
+
+.TP
+**Basic scan of all available DNS servers:**
+.B pingdns
+.br
+Scans all hardcoded and downloaded DNS servers with default settings (3 pings per server, 250 ms timeout, and CPU core-based threading).
+
+.TP
+**Scan a specific number of servers:**
+.B pingdns -n 100
+.br
+Scans the first 100 DNS servers from the combined list, using default ping count and timeout.
+
+.TP
+**Custom ping count and timeout:**
+.B pingdns -n 50 -pings 5 -timeout 500
+.br
+Scans 50 DNS servers, sending 5 pings to each with a 500 ms timeout per ping.
+
+.TP
+**Control threading for faster scans:**
+.B pingdns -t 8
+.br
+Scans all available DNS servers using 8 threads, speeding up the process on multi-core systems.
+
+.TP
+**Comprehensive scan with custom settings:**
+.B pingdns -n 200 -pings 4 -timeout 300 -t 16
+.br
+Scans 200 DNS servers, sending 4 pings per server with a 300 ms timeout, using 16 threads for maximum efficiency.
+
+.TP
+**Minimal scan for quick testing:**
+.B pingdns -n 10 -pings 2 -timeout 100
+.br
+Quickly scans 10 DNS servers with 2 pings each and a 100 ms timeout, useful for a fast check.
+
+.TP
+**Large-scale scan with high thread count:**
+.B pingdns -n 1000 -pings 3 -t 32
+.br
+Scans 1000 DNS servers with 3 pings each, using 32 threads to handle the large workload efficiently.
+
+.SH FILES
+.TP
+\fBdns_results.csv\fR
+The output CSV file containing scan results, including server name, IP address, geolocation (if available), and average RTT.
+
+.SH AUTHOR
+Stefan Fröberg <haxbox2000@gmail.com>
+
+.SH COPYRIGHT
+Copyright © 2025 Stefan Fröberg
+.PP
+This is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3, or (at your option) any later version.
